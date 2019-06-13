@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpClient, HttpResponseBase } from '@angular/common/http';
+import { HttpClient, HttpResponseBase, HttpErrorResponse } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators'
+import { Router } from '@angular/router';
+import { User } from '../../models/user';
+
 
 @Component({
   selector: 'app-cadastro',
@@ -10,7 +13,7 @@ import { map, catchError } from 'rxjs/operators'
 })
 export class CadastroComponent implements OnInit {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,private roteador: Router) { }
 
   ngOnInit() {
   }
@@ -22,6 +25,8 @@ export class CadastroComponent implements OnInit {
     telefone: new FormControl('', [Validators.required, Validators.pattern('\\d{4,5}-?\\d{4}')]),
     avatar: new FormControl('', [Validators.required], this.validaImagem.bind(this))
   })
+
+
 
   validarTodosOsCamposDoFormulario(form: FormGroup) {
     Object.keys(form.controls).forEach(field => {
@@ -44,12 +49,28 @@ export class CadastroComponent implements OnInit {
   }
 
   handleCadastrarUsuario() {
-    console.log(this.formCadastro.value);
+
     if (this.formCadastro.valid) {
       console.log(this.formCadastro.value);
-      this.formCadastro.reset();
+      const userData = new User(this.formCadastro.value);
+      this.httpClient.post('http://localhost:3200/users',userData).subscribe(
+        ()=> {
+          console.log('Cadastro com sucesso');
+          
+          setTimeout(() => {
+            this.roteador.navigate(['/cadastro']);
+          }, 1000);
+          this.formCadastro.reset();
+        }
+        ,(responseError: HttpErrorResponse) => {
+          this.mensagensErro = responseError.error.body
+        }
+        //erro => console.error(erro)
+      )
+      
     } else {
       this.validarTodosOsCamposDoFormulario(this.formCadastro);
+
     }
   }
 

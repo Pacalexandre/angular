@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Input } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
