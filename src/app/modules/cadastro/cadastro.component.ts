@@ -12,8 +12,9 @@ import { User } from '../../models/user';
   styleUrls: ['./cadastro.component.css']
 })
 export class CadastroComponent implements OnInit {
+  mensagensErro: any;
 
-  constructor(private httpClient: HttpClient,private roteador: Router) { }
+  constructor(private httpClient: HttpClient, private roteador: Router) { }
 
   ngOnInit() {
   }
@@ -25,8 +26,6 @@ export class CadastroComponent implements OnInit {
     telefone: new FormControl('', [Validators.required, Validators.pattern('\\d{4,5}-?\\d{4}')]),
     avatar: new FormControl('', [Validators.required], this.validaImagem.bind(this))
   })
-
-
 
   validarTodosOsCamposDoFormulario(form: FormGroup) {
     Object.keys(form.controls).forEach(field => {
@@ -53,21 +52,21 @@ export class CadastroComponent implements OnInit {
     if (this.formCadastro.valid) {
       console.log(this.formCadastro.value);
       const userData = new User(this.formCadastro.value);
-      this.httpClient.post('http://localhost:3200/users',userData).subscribe(
-        ()=> {
+      this.httpClient.post('http://localhost:3200/users', userData).subscribe(
+        () => {
           console.log('Cadastro com sucesso');
-          
+
           setTimeout(() => {
             this.roteador.navigate(['/cadastro']);
           }, 1000);
           this.formCadastro.reset();
         }
-        ,(responseError: HttpErrorResponse) => {
+        , (responseError: HttpErrorResponse) => {
           this.mensagensErro = responseError.error.body
         }
         //erro => console.error(erro)
       )
-      
+
     } else {
       this.validarTodosOsCamposDoFormulario(this.formCadastro);
 

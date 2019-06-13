@@ -7,13 +7,17 @@ import { AppComponent } from './app.component';
 import { SharedComponentModule } from './components/shared-components.module';
 import { CaixaDeEntradaComponent } from './modules/caixa-de-entrada/caixa-de-entrada.component';
 import { LoginComponent } from './modules/login/login.component';
+import { CmailFormGroupComponent } from './components/cmail-form-group/cmail-form-group.component';
+import { CmailFormFieldDirective } from './components/cmail-form-group/cmail-form-field.directive';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CaixaDeEntradaComponent,
-    LoginComponent
+    LoginComponent,
+    CmailFormFieldDirective,
+    CmailFormGroupComponent
   ],
   imports: [
     BrowserModule,

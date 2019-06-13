@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+login = {
+  email: '',
+  password: ''
+}
 
-  ngOnInit() {
+  constructor(private httpClient: HttpClient) { }
+
+  ngOnInit() { }
+
+  handleLogin(formLogin: NgForm) {
+    if (formLogin.valid) {
+      this.httpClient
+        .post('http://localhost:3200/login', this.login)
+        .subscribe(
+          (response) => {
+            console.log(response);
+            console.log('deu certo');
+          },
+          (error) => {
+            console.error(error);
+            console.log('deu ruim');
+          }
+        )
+    }
   }
-
 }
