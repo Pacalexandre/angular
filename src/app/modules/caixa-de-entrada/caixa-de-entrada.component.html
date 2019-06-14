@@ -7,7 +7,15 @@
 
       <div class="mdl-grid">
         <ul>
-          <cmail-list-item></cmail-list-item>
+          <li *ngFor="let email of emailList">
+              <cmail-list-item 
+              [destinatario]="email.destinatario"
+              [assunto]="email.assunto"
+              [introducaoDoConteudo]="email.introducaoDoConteudo"
+              [dataDeEnvio]="email.dataDeEnvio"
+              (eventoVaiRemover)="handleRemoveEmail($event,email.id)"
+              ></cmail-list-item>
+          </li>
         </ul>
       </div>
 
