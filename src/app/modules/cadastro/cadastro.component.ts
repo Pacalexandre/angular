@@ -1,8 +1,8 @@
+import { HttpClient, HttpErrorResponse, HttpResponseBase } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpClient, HttpResponseBase, HttpErrorResponse } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators'
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, map } from 'rxjs/operators';
 import { User } from '../../models/user';
 
 
@@ -11,6 +11,7 @@ import { User } from '../../models/user';
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.css']
 })
+
 export class CadastroComponent implements OnInit {
   mensagensErro: any;
 
